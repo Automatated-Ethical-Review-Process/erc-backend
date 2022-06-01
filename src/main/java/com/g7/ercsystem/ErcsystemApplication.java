@@ -25,7 +25,7 @@ public class ErcsystemApplication extends SpringBootServletInitializer implement
 			Role role1 = new Role(EnumRole.ROLE_APPLICANT);
 			Role role2 = new Role(EnumRole.ROLE_REVIEWER);
 			Role role3 = new Role(EnumRole.ROLE_CLERK);
-			Role role4 = new Role(EnumRole.ROLE_SECRETORY);
+			Role role4 = new Role(EnumRole.ROLE_SECRETARY);
 			Role role5 = new Role(EnumRole.ROLE_ADMIN);
 
 			roleRepository.save(role1);

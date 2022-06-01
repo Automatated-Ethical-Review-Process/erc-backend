@@ -76,7 +76,7 @@ public class UserServiceImpl implements UserService {
                     roles.add(superAdminRole);
                     break;
                 case "secretary":
-                    Role secretaryRole = roleRepository.findByName(EnumRole.ROLE_SECRETORY)
+                    Role secretaryRole = roleRepository.findByName(EnumRole.ROLE_SECRETARY)
                             .orElseThrow(()->{
                                 log.error("Error: ROLE_ADMIN is not found from DB and requested by username {}",email);
                                 return new RuntimeException("Error: Role is not found.");

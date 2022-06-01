@@ -6,18 +6,14 @@ import java.util.List;
 
 @Data
 public class JwtResponse {
-    private String token;
-    private String type = "Bearer";
-    private String refreshToken;
-    private String id;
-    private String email;
+
+    private String access;
+    private String refresh;
     private List<String> roles;
 
-    public JwtResponse(String token, String refreshToken, String id, String email, List<String> roles) {
-        this.token = token;
-        this.refreshToken = refreshToken;
-        this.id = id;
-        this.email = email;
+    public JwtResponse(String access, String refresh,List<String> roles) {
+        this.access = access;
+        this.refresh = refresh;
         this.roles = roles;
     }
 }

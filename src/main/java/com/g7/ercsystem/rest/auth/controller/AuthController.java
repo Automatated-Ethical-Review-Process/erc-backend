@@ -17,6 +17,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -51,6 +52,7 @@ public class AuthController {
 
     long i = 0;
     @GetMapping(value = "/test")
+    @PreAuthorize("hasRole('ADMIN')")
     public String test(){
         System.out.println("Request " + ++i);
         return "Hello World";
@@ -59,6 +61,7 @@ public class AuthController {
     @PostMapping(value = "/login")
     public ResponseEntity<?> SignIn(@RequestBody LoginRequest request){
         try{
+
             Authentication authentication = authenticationManager.authenticate(
                     new UsernamePasswordAuthenticationToken(request.getEmail(),request.getPassword()));
             SecurityContextHolder.getContext().setAuthentication(authentication);
@@ -68,19 +71,19 @@ public class AuthController {
                     .map(GrantedAuthority::getAuthority)
                     .collect(Collectors.toList());
 
-            RefreshToken refreshToken = refreshTokenService.createRefreshToken(userDetails.getId());
+            RefreshToken refreshToken = refreshTokenService.createRefreshToken(userDetails.getId(),jwt);
+            System.out.println(jwt.length());
 
             JwtResponse jwtResponse =  new JwtResponse(
                     jwt,
                     refreshToken.getToken(),
-                    userDetails.getId(),
-                    userDetails.getUsername(),
                     roles
             );
             log.info("authenticate user successfully,username is {}",userDetails.getUsername());
             return new ResponseEntity<>(jwtResponse, HttpStatus.OK);
 
         }catch (Exception e){
+                e.printStackTrace();
                 throw  e;
         }
     }

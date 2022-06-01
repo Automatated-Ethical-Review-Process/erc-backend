@@ -33,16 +33,16 @@ public class RefreshTokenService {
         return refreshTokenRepository.findByToken(token);
     }
 
-    public RefreshToken  createRefreshToken(String userId){
+    public RefreshToken  createRefreshToken(String userId,String jwt){
 
+        String [] token={jwt.substring(0,99), String.valueOf(Instant.now().hashCode()),jwt.substring(100,228)};
         RefreshToken refreshToken =new RefreshToken();
         if(userRepository.findById(userId).isPresent()){
             refreshToken.setUser(userRepository.findById(userId).get());
             refreshToken.setExpiryDate(Instant.now().plusMillis(refreshTokenDurationMs));
-            refreshToken.setToken(UUID.randomUUID().toString());
+            refreshToken.setToken(token[0]+token[1]+token[2]);
         }
-        refreshToken = refreshTokenRepository.save(refreshToken);
-        return refreshToken;
+        return refreshTokenRepository.save(refreshToken);
     }
 
     public RefreshToken verifyExpiration(RefreshToken token){
