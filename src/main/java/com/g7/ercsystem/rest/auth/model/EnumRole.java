@@ -4,6 +4,6 @@ public enum EnumRole {
     ROLE_APPLICANT,
     ROLE_REVIEWER,
     ROLE_CLERK,
-    ROLE_SECRETORY,
+    ROLE_SECRETARY,
     ROLE_ADMIN
 }
