@@ -1,5 +1,9 @@
 package com.g7.ercsystem.rest.auth.controller;
 
+import com.g7.ercsystem.utils.MailSender;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -11,6 +15,22 @@ import org.springframework.web.bind.annotation.RestController;
 @CrossOrigin(origins = "*",maxAge = 3600)
 public class TestController {
 
+    @Autowired
+    private MailSender sender;
+    @GetMapping(value = "/email")
+    public ResponseEntity<?> sendEmail(){
+        try {
+                sender.sendVerificationEmail("Dilshan Weerathunga","nishadadilshan@gmail.com","www.google.com");
+            return new ResponseEntity<>(HttpStatus.ACCEPTED);
+        }catch (Exception e){
+            return new ResponseEntity<>(HttpStatus.BAD_GATEWAY);
+        }
+    }
+
+    @GetMapping(value = "")
+    public ResponseEntity<?> test(){
+        return new ResponseEntity<>("Hello from server",HttpStatus.ACCEPTED);
+    }
     @GetMapping(value = "/admin")
     @PreAuthorize("hasRole('ADMIN')")
     public String admin(){
