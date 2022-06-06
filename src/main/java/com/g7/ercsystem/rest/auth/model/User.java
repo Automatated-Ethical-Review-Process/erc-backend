@@ -47,7 +47,7 @@ public class User {
     @Column(name = "modified_date",nullable = false)
     private Instant modifiedDate=Instant.now();
 
-    @OneToOne(cascade = CascadeType.ALL,fetch = FetchType.LAZY)
+    @OneToOne(cascade = CascadeType.ALL,fetch = FetchType.EAGER)
     @JoinColumn(name = "md_id")
     private MemberDetails memberDetails;
 

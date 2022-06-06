@@ -1,8 +1,6 @@
 package com.g7.ercsystem.payload.requests;
 
 import com.g7.ercsystem.rest.auth.model.MemberDetails;
-import com.g7.ercsystem.rest.auth.model.Role;
-import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
