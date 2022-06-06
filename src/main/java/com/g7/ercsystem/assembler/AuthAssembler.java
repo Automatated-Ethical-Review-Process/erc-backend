@@ -1,19 +1,21 @@
 package com.g7.ercsystem.assembler;
 
 import com.g7.ercsystem.payload.requests.SignUpRequest;
+import com.g7.ercsystem.payload.responses.UserResponse;
 import com.g7.ercsystem.rest.auth.model.User;
 import com.g7.ercsystem.rest.auth.service.UserServiceImpl;
-import lombok.Builder;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 
 import java.time.Instant;
 
 @Component
-@Builder
 public class AuthAssembler {
 
+    @Autowired
     private PasswordEncoder passwordEncoder;
+    @Autowired
     private UserServiceImpl userService;
 
     public User SignUpRequestToUserEntity(SignUpRequest request){
@@ -28,4 +30,19 @@ public class AuthAssembler {
         user.setIsLocked(true);
         return user;
     }
+
+    public UserResponse UserEntityToUserResponse(User user){
+        UserResponse response = new UserResponse();
+
+        response.setEmail(user.getEmail());
+        response.setRoles(userService.setRoles(user.getRoles()));
+        response.setMemberDetails(user.getMemberDetails());
+        response.setIsLocked(user.getIsLocked());
+        response.setIsVerified(user.getIsVerified());
+        response.setCreatedDate(user.getCreatedDate());
+        response.setModifiedDate(user.getModifiedDate());
+
+        return response;
+    }
+
 }

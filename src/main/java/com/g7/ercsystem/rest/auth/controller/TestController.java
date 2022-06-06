@@ -2,13 +2,19 @@ package com.g7.ercsystem.rest.auth.controller;
 
 import com.g7.ercsystem.utils.MailSender;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.ClassPathResource;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.util.WebUtils;
+
+import javax.servlet.ServletContext;
+import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletRequest;
+import java.io.File;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 
 @RestController
 @RequestMapping("/api/test")
@@ -17,12 +23,27 @@ public class TestController {
 
     @Autowired
     private MailSender sender;
+
     @GetMapping(value = "/email")
     public ResponseEntity<?> sendEmail(){
         try {
-                sender.sendVerificationEmail("Dilshan Weerathunga","nishadadilshan@gmail.com","www.google.com");
+                sender.sendVerificationEmail("Sandaruawn Lakshitha","uimalka.96@gmail.com");
             return new ResponseEntity<>(HttpStatus.ACCEPTED);
         }catch (Exception e){
+            e.printStackTrace();
+            System.out.println(e.getMessage());
+            return new ResponseEntity<>(HttpStatus.BAD_GATEWAY);
+        }
+    }
+
+    @GetMapping(value = "/test")
+    public ResponseEntity<?> cookies(HttpServletRequest request){
+        try {
+            Cookie name = WebUtils.getCookie(request, "sample");
+            return new ResponseEntity<>(name.getValue(),HttpStatus.ACCEPTED);
+        }catch (Exception e){
+            e.printStackTrace();
+            System.out.println(e.getMessage());
             return new ResponseEntity<>(HttpStatus.BAD_GATEWAY);
         }
     }

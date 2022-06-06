@@ -1,52 +1,70 @@
 package com.g7.ercsystem.rest.auth.jwt;
 
+import com.g7.ercsystem.interfaces.UserService;
 import com.g7.ercsystem.repository.UserRepository;
+import com.g7.ercsystem.rest.auth.model.EnumRole;
+import com.g7.ercsystem.rest.auth.model.Role;
+import com.g7.ercsystem.rest.auth.model.User;
 import com.g7.ercsystem.rest.auth.service.UserDetailsImpl;
 import io.jsonwebtoken.*;
-import lombok.Builder;
 import lombok.extern.slf4j.Slf4j;
+import net.minidev.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Component;
 import org.springframework.util.StringUtils;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.Date;
+import java.util.Set;
 
 @Component
 @Slf4j
 public class JwtUtils {
 
-    private  UserRepository userRepository;
+    @Autowired
+    private UserService userService;
     @Value("${jwtSecret}")
     private String jwtSecret;
+    private HttpServletRequest request;
 
     @Value("${jwtExpirationMs}")
     private int jwtExpirationMs;
 
-    public JwtUtils(UserRepository userRepository) {
-        this.userRepository = userRepository;
+    public JwtUtils(UserService userService, HttpServletRequest request) {
+        this.userService = userService;
+        this.request = request;
     }
 
-    private String generateTokenFromUsername(String username){
-        return Jwts.builder().setSubject(username).setIssuedAt(new Date())
+    public String generateTokenFromUsername(String id){
+        return Jwts.builder().setSubject(id).setIssuedAt(new Date())
                 .setExpiration(new Date((new Date().getTime()+jwtExpirationMs)))
                 .signWith(SignatureAlgorithm.HS512,jwtSecret)
                 .compact();
     }
 
+
     public String generateJwtToken(UserDetailsImpl userPrincipal){
         return generateTokenFromUsername(userPrincipal.getId());
     }
 
-    public String getUserNameFromJwtToken(String token){
+    public String getUserIdFromJwtToken(String token){
         return Jwts.parser().setSigningKey(jwtSecret).parseClaimsJws(token).getBody().getSubject();
     }
 
-    public String getUserName(String headerAuth){
+    private String parseJwt(HttpServletRequest request){
+        String headerAuth = request.getHeader("Authorization");
+
         if(StringUtils.hasText(headerAuth) && headerAuth.startsWith("Bearer ")){
-            headerAuth = headerAuth.substring(7);
+            return headerAuth.substring(7);
         }
-        return getUserNameFromJwtToken(headerAuth);
+
+        return null;
+    }
+
+    public String getUserIdFromRequest(){
+        return getUserIdFromJwtToken(parseJwt(request));
     }
 
     public boolean validateJwtToken(String authToken){

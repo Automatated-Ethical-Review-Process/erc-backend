@@ -1,5 +1,6 @@
 package com.g7.ercsystem.rest.auth.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -15,11 +16,13 @@ public class MemberDetails {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @JsonIgnore
     private long md_id;
     private String name;
     private String address;
     private String nic;
 
+    @JsonIgnore
     @OneToOne(mappedBy = "memberDetails")
     private User user;
 
@@ -28,4 +31,5 @@ public class MemberDetails {
         this.address = address;
         this.nic = nic;
     }
+
 }
