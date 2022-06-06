@@ -21,7 +21,8 @@ import java.util.Set;
 
 @SpringBootApplication
 @EnableAsync
-public class ErcsystemApplication extends SpringBootServletInitializer implements CommandLineRunner {
+//extends SpringBootServletInitializer implements CommandLineRunner
+public class ErcsystemApplication  {
 
 	@Autowired
 	private RoleRepository roleRepository;
@@ -35,37 +36,37 @@ public class ErcsystemApplication extends SpringBootServletInitializer implement
 		SpringApplication.run(ErcsystemApplication.class, args);
 	}
 
-	@Override
-	public void run(String... args) {
-		if(roleRepository.findAll().isEmpty()){
-			Role role1 = new Role(EnumRole.ROLE_APPLICANT);
-			Role role2 = new Role(EnumRole.ROLE_REVIEWER);
-			Role role3 = new Role(EnumRole.ROLE_CLERK);
-			Role role4 = new Role(EnumRole.ROLE_SECRETARY);
-			Role role5 = new Role(EnumRole.ROLE_ADMIN);
+//	@Override
+//	public void run(String... args) {
+//		if(roleRepository.findAll().isEmpty()){
+//			Role role1 = new Role(EnumRole.ROLE_APPLICANT);
+//			Role role2 = new Role(EnumRole.ROLE_REVIEWER);
+//			Role role3 = new Role(EnumRole.ROLE_CLERK);
+//			Role role4 = new Role(EnumRole.ROLE_SECRETARY);
+//			Role role5 = new Role(EnumRole.ROLE_ADMIN);
+//
+//			roleRepository.save(role1);
+//			roleRepository.save(role2);
+//			roleRepository.save(role3);
+//			roleRepository.save(role4);
+//			roleRepository.save(role5);
+//		}
+//
+//		if(userRepository.findAll().isEmpty()){
+//			SignUpRequest signUpRequest = new SignUpRequest();
+//			Set<String> roles = new HashSet<>();
+//			roles.add("admin");
+//			roles.add("secretary");
+//			roles.add("applicant");
+//			roles.add("clerk");
+//			roles.add("reviewer");
+//			signUpRequest.setEmail("admin@gmail.com");
+//			signUpRequest.setPassword("12345678");
+//			signUpRequest.setRoles(roles);
+//			signUpRequest.setMemberDetails(new MemberDetails("Sandaruwan lakshitha","Matara","987654321V"));
+//			userRepository.save(authAssembler.SignUpRequestToUserEntity(signUpRequest));
+//		}
 
-			roleRepository.save(role1);
-			roleRepository.save(role2);
-			roleRepository.save(role3);
-			roleRepository.save(role4);
-			roleRepository.save(role5);
-		}
 
-		if(userRepository.findAll().isEmpty()){
-			SignUpRequest signUpRequest = new SignUpRequest();
-			Set<String> roles = new HashSet<>();
-			roles.add("admin");
-			roles.add("secretary");
-			roles.add("applicant");
-			roles.add("clerk");
-			roles.add("reviewer");
-			signUpRequest.setEmail("admin@gmail.com");
-			signUpRequest.setPassword("12345678");
-			signUpRequest.setRoles(roles);
-			signUpRequest.setMemberDetails(new MemberDetails("Sandaruwan lakshitha","Matara","987654321V"));
-			userRepository.save(authAssembler.SignUpRequestToUserEntity(signUpRequest));
-		}
-
-
-	}
+	//}
 }

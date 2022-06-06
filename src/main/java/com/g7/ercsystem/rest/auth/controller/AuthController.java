@@ -4,7 +4,6 @@ import com.g7.ercsystem.assembler.AuthAssembler;
 import com.g7.ercsystem.exception.TokenRefreshException;
 import com.g7.ercsystem.payload.requests.LoginRequest;
 import com.g7.ercsystem.payload.requests.SignUpRequest;
-import com.g7.ercsystem.payload.requests.TokenRefreshRequest;
 import com.g7.ercsystem.payload.responses.JwtResponse;
 import com.g7.ercsystem.payload.responses.MessageResponse;
 import com.g7.ercsystem.payload.responses.TokenRefreshResponse;
@@ -30,8 +29,6 @@ import org.springframework.web.util.WebUtils;
 
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import javax.validation.Valid;
 import java.util.List;
 import java.util.stream.Collectors;
 
