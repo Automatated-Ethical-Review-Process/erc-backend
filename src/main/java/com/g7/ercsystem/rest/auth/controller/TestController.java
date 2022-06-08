@@ -1,6 +1,7 @@
 package com.g7.ercsystem.rest.auth.controller;
 
 import com.g7.ercsystem.utils.MailSender;
+import com.google.gson.Gson;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -13,6 +14,9 @@ import org.springframework.web.util.WebUtils;
 
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
 
 @RestController
 @RequestMapping("/api/test")
@@ -25,7 +29,7 @@ public class TestController {
     @GetMapping(value = "/email")
     public ResponseEntity<?> sendEmail(){
         try {
-                sender.sendVerificationEmail("Sandaruawn Lakshitha","uimalka.96@gmail.com");
+                sender.sendVerificationEmail("uimalka.96@gmail.com");
             return new ResponseEntity<>(HttpStatus.ACCEPTED);
         }catch (Exception e){
             e.printStackTrace();
@@ -48,6 +52,24 @@ public class TestController {
 
     @GetMapping(value = "")
     public ResponseEntity<?> test(){
+        List<String> roles = new ArrayList<>();
+        roles.add("applicant");
+        roles.add("admin");
+        HashMap<String ,String> hashMap = new HashMap<>();
+        hashMap.put("id","ehfsknnwk2382dhsskahoqh8foqjddosaaln");
+        hashMap.put("access","46t8efgbhwkq,djh3ieuhdoqwdpi1233");
+        hashMap.put("refresh","4xzxdkq,djh3ieuhdoqwndvbfpi1233");
+        hashMap.put("roles",roles.toString());
+
+        Gson gson = new Gson();
+
+        String jsonString = gson.toJson(hashMap);
+        System.out.println(jsonString);
+
+        HashMap<String,String> get = gson.fromJson(jsonString,HashMap.class);
+
+        System.out.println(get.toString());
+
         return new ResponseEntity<>("Hello from server",HttpStatus.ACCEPTED);
     }
     @GetMapping(value = "/admin")

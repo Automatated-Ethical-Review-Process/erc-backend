@@ -33,7 +33,7 @@ public class MailSender {
     private ThymeleafConfiguration thymeleafConfiguration;
 
     @Async
-    public void sendVerificationEmail(String name,String email) throws MessagingException, IOException {
+    public void sendVerificationEmail(String email) throws MessagingException, IOException {
 
         String fromAddress = "harshanadun52@gmail.com";
         String senderName = "ERC University of Ruhuna";
