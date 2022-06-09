@@ -16,6 +16,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.util.StringUtils;
 
 import javax.servlet.http.HttpServletRequest;
+import java.net.NetworkInterface;
 import java.util.Date;
 import java.util.Set;
 
@@ -38,7 +39,8 @@ public class JwtUtils {
     }
 
     public String generateTokenFromUsername(String id){
-        return Jwts.builder().setSubject(id).setIssuedAt(new Date())
+        return Jwts.builder().setSubject(id).
+                setIssuedAt(new Date())
                 .setExpiration(new Date((new Date().getTime()+jwtExpirationMs)))
                 .signWith(SignatureAlgorithm.HS512,jwtSecret)
                 .compact();

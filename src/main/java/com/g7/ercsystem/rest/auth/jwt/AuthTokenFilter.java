@@ -1,9 +1,6 @@
 package com.g7.ercsystem.rest.auth.jwt;
 
 import com.g7.ercsystem.rest.auth.service.UserDetailsServiceImpl;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.NoArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
